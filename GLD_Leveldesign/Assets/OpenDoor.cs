@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class OpenDoor : MonoBehaviour
 {
@@ -11,11 +12,15 @@ public class OpenDoor : MonoBehaviour
     bool isTriggered = false;
     MoveTo[] list;
 
+    public UnityEvent shock;
+
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").gameObject;
         list = FindObjectsOfType<MoveTo>();
+
+        InvokeRepeating("ShockwaveEvent", 3f, 4f);
     }
 
     // Update is called once per frame
@@ -43,4 +48,8 @@ public class OpenDoor : MonoBehaviour
         }
     }
 
+    private void ShockwaveEvent()
+    {
+        shock.Invoke();
+    }
 }
